@@ -5,12 +5,16 @@ const CreateTaskForm = (props) => {
   const [taskName, setTaskName] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [taskDetails, setTaskDetails] = useState("");
+  const [dueDateError, setDueDateError] = useState(null);
 
   const handleNameChange = (e) => {
     setTaskName(e.target.value);
   };
 
   const hendleDateChange = (e) => {
+    if (e.target.value !== '') {
+      setDueDateError(null);
+    }
     setDueDate(e.target.value);
   };
 
@@ -21,18 +25,28 @@ const CreateTaskForm = (props) => {
   const hendleSubmit = (e) => {
     e.preventDefault();
 
+    if (dueDate === "") {
+      setDueDateError("Please select a dueDate before creating a new task!");
+
+      return;
+    }
+
     const newTask = {
-      name: taskName,
+      status: taskName,
       dueDate: dueDate,
-      taskDetails: taskDetails,
+      description: taskDetails,
     };
 
-    console.log("newTask = ", newTask);
+    props.onTaskCreate(newTask);
 
     setTaskName("");
     setDueDate("");
     setTaskDetails("");
+    setDueDateError(null);
   };
+
+
+  const dueDateElement = dueDateError ? <div class="red-color">{dueDateError}</div> : null;
 
   return (
     <div>
@@ -45,6 +59,7 @@ const CreateTaskForm = (props) => {
         <div className="form-row">
           <label>Due Date</label>
           <input onChange={hendleDateChange} type="date" value={dueDate} />
+          {dueDateElement}
         </div>
 
         <div className="form-row">

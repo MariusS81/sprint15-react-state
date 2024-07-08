@@ -7,7 +7,7 @@ const ItemCard = ({ id, status, description, dueDate, onDelete }) => {
       <h3>{id}</h3>
       <p>Status: {status}</p>
       <p>Description: {description}</p>
-      <p>Due Date: {dueDate}</p>
+      <p>Due Date: {dueDate?.toLocaleDateString() || "No due date"}</p>
       <button onClick={() => onDelete(id)}>Delete</button>
     </div>
   );

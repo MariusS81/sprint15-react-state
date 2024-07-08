@@ -8,10 +8,6 @@ function App() {
     <div className="App">
       <div className="main-content">
         <ItemManager />
-        <div className="add-card">
-          <h3>Create Task</h3>
-          <CreateTaskForm />
-        </div>
       </div>
     </div>
   );

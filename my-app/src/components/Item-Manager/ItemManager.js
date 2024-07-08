@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ItemCard from "../Item-Card/ItemCard";
+import CreateTaskForm from "../Add-task-card/TaskForm";
 import "./ItemManager.css";
 
 // Variabilă globală items
@@ -8,43 +9,43 @@ const items = [
     id: "T-1",
     status: "ToDo",
     description: "Create a Design System for Enum Workspace.",
-    dueDate: "15/06/2024",
+    dueDate: new Date("06/15/2024"),
   },
   {
     id: "T-2",
     status: "In Progress",
     description: "Create a Design System for Enum Workspace.",
-    dueDate: "18/07/2024",
+    dueDate: new Date("07/18/2024"),
   },
   {
     id: "T-3",
     status: "Completed",
     description: "Create a Design System for Enum Workspace.",
-    dueDate: "05/08/2024",
+    dueDate: new Date("08/05/2024"),
   },
   {
     id: "T-4",
     status: "Done",
     description: "Create a Design System for Enum Workspace.",
-    dueDate: "23/07/2024",
+    dueDate: new Date("07/23/2024"),
   },
   {
     id: "T-5",
     status: "ToDo",
     description: "Create a Design System for Enum Workspace.",
-    dueDate: "24/09/2024",
+    dueDate: new Date("09/24/2024"),
   },
   {
     id: "T-6",
     status: "Completed",
     description: "Create a Design System for Enum Workspace.",
-    dueDate: "24/10/2024",
+    dueDate: new Date("10/24/2024"),
   },
   {
     id: "T-7",
     status: "In Progress",
     description: "Create a Design System for Enum Workspace.",
-    dueDate: "24/01/2025",
+    dueDate: new Date("01/24/2025"),
   },
 ];
 
@@ -57,33 +58,39 @@ const ItemManager = () => {
     setItems(updatedItems);
   };
 
-  const handleAddCard = () => {
+  const handleAddCard = (newTask) => {
     const newCard = {
       id: `T-${itemsState.length + 1}`,
-      description: "New Task",
-      dueDate: "08/07/2024",
+      description: newTask.description,
+      dueDate: newTask.dueDate ? new Date(newTask.dueDate) : null,
+      status: newTask.status,
     };
 
     setItems([...itemsState, newCard]);
   };
 
   return (
-    <div className="container">
-      <h1>Task Manager</h1>
-      <div className="items">
-        {itemsState.map((item, index) => (
-          <ItemCard
-            key={index}
-            id={item.id}
-            status={item.status}
-            description={item.description}
-            dueDate={item.dueDate}
-            onDelete={handleDeleteCard}
-          />
-        ))}
+    <>
+      <div className="container">
+        <h1>Task Manager</h1>
+        <div className="items">
+          {itemsState.map((item, index) => (
+            <ItemCard
+              key={index}
+              id={item.id}
+              status={item.status}
+              description={item.description}
+              dueDate={item.dueDate}
+              onDelete={handleDeleteCard}
+            />
+          ))}
+        </div>
       </div>
-      <button onClick={handleAddCard}>Adaugă Card Nou</button>
-    </div>
+      <div className="add-card">
+        <h3>Create Task</h3>
+        <CreateTaskForm onTaskCreate={handleAddCard} />
+      </div>
+    </>
   );
 };
 
